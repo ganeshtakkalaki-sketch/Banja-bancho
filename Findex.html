@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dai-ichi Buddy — HR Co-pilot (Prototype)</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main class="app-wrap">
+        <header class="chat-header">
+            <div class="left">
+                <div class="avatar">DB</div>
+                <div class="meta">
+                    <div class="name">Dai-ichi Buddy</div>
+                    <div class="status">Active • HR Co-pilot</div>
+                </div>
+            </div>
+            <div class="right">
+                <button id="helpBtn" class="icon-btn" title="Menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </header>
+
+        <section id="messages" class="messages" aria-live="polite"></section>
+
+        <nav class="quick-actions" aria-label="Quick actions">
+            <button class="pill" data-action="leave">Leave</button>
+            <button class="pill" data-action="payroll">Payroll</button>
+            <button class="pill" data-action="employee-card">Employee Card</button>
+            <button class="pill" data-action="raise-ticket">Raise Ticket</button>
+            <button class="pill" data-action="learning">L&D</button>
+            <button class="pill" data-action="recognition">Recognition</button>
+        </nav>
+
+        <form id="inputForm" class="input-bar" autocomplete="off" onsubmit="return false;">
+            <input id="textInput" type="text" placeholder="Start typing here..." aria-label="Chat input" />
+            <button id="micBtn" type="button" class="mic-btn" title="Speak"><i class="fas fa-microphone"></i></button>
+            <button id="sendBtn" type="button" class="send-btn" title="Send"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </main>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+        <div class="modal-body">
+            <button id="modalClose" class="modal-close"><i class="fas fa-times"></i></button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <template id="message-template">
+        <div class="msg-row">
+            <div class="msg-avatar"></div>
+            <div class="msg-bubble"></div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>

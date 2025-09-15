@@ -1,0 +1,410 @@
+/* Dai-ichi Buddy — Frontend prototype styles */
+
+/* ---------- Variables ---------- */
+:root {
+    --primary-purple: #6A1B9A; /* SUD Life primary color */
+    --light-purple: #D1C4E9;
+    --dark-purple: #4A148C;
+    --off-white: #F8F9FA;
+    --text-dark: #333;
+    --text-light: #fff;
+    --border-color: #EEE;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --modal-overlay: rgba(0, 0, 0, 0.6);
+    --bot-bubble-bg: #E0E0E0; /* Light grey for bot messages */
+}
+
+/* ---------- Base Styles ---------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--off-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Prevent body scroll when chatbot is fixed */
+}
+
+/* ---------- App Container ---------- */
+.app-wrap {
+    width: 380px; /* Standard mobile width */
+    height: 700px; /* Standard mobile height */
+    background-color: var(--text-light);
+    border-radius: 15px;
+    box-shadow: 0 0 25px var(--shadow-light);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ensure rounded corners are respected */
+    position: relative;
+}
+
+/* ---------- Chat Header ---------- */
+.chat-header {
+    background-color: var(--primary-purple);
+    color: var(--text-light);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    position: sticky; /* Keep header visible */
+    top: 0;
+    z-index: 10;
+}
+
+.chat-header .left {
+    display: flex;
+    align-items: center;
+}
+
+.chat-header .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--dark-purple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-right: 10px;
+}
+
+.chat-header .meta .name {
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.chat-header .meta .status {
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+.chat-header .icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.5em; /* Adjust icon size */
+    cursor: pointer;
+    padding: 5px;
+    display: flex; /* Center icon */
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- Messages Area ---------- */
+.messages {
+    flex-grow: 1; /* Takes up available space */
+    padding: 15px;
+    overflow-y: auto; /* Enable scrolling for messages */
+    background-color: var(--off-white);
+}
+
+.msg-row {
+    display: flex;
+    align-items: flex-end; /* Align bubbles to the bottom of the row */
+    margin-bottom: 12px;
+}
+
+.msg-row.user {
+    justify-content: flex-end; /* User messages on the right */
+}
+
+.msg-row.bot {
+    justify-content: flex-start; /* Bot messages on the left */
+}
+
+.msg-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #CCC; /* Default for bot, overridden for user */
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+    font-weight: 600;
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.msg-row.user .msg-avatar {
+    background-color: var(--primary-purple);
+    order: 2; /* Puts avatar on the right for user */
+    margin-left: 10px;
+}
+
+.msg-row.bot .msg-avatar {
+    background-color: var(--dark-purple);
+    margin-right: 10px;
+}
+
+.msg-bubble {
+    max-width: 75%; /* Limit bubble width */
+    padding: 12px 15px;
+    border-radius: 18px; /* Rounded corners for bubbles */
+    line-height: 1.4;
+    word-wrap: break-word; /* Ensure long words break */
+}
+
+.msg-row.user .msg-bubble {
+    background-color: var(--primary-purple);
+    color: var(--text-light);
+    border-bottom-right-radius: 5px; /* Tweak for speech bubble effect */
+}
+
+.msg-row.bot .msg-bubble {
+    background-color: var(--bot-bubble-bg);
+    color: var(--text-dark);
+    border-bottom-left-radius: 5px; /* Tweak for speech bubble effect */
+}
+
+/* Specific styles for card content within bot bubbles */
+.msg-bubble strong {
+    color: var(--dark-purple); /* Make important text pop */
+}
+
+.msg-bubble .small {
+    font-size: 0.85em;
+    color: #555;
+}
+
+/* Styles for interactive elements within bot messages (buttons, links) */
+.msg-bubble .btn-primary, .msg-bubble .btn-ghost {
+    margin-top: 10px; /* Space above buttons */
+    margin-right: 8px; /* Space between buttons if multiple */
+    /* Ensure these buttons don't inherit weird styles */
+    display: inline-block; /* Allow them to sit side-by-side */
+}
+
+.msg-bubble a {
+    color: var(--primary-purple);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.msg-bubble a:hover {
+    text-decoration: underline;
+}
+
+/* For grouped buttons or actions within a bot message */
+.msg-bubble .card-content {
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap to next line */
+    gap: 8px; /* Space between buttons */
+    margin-top: 10px;
+}
+
+/* Styling for forms embedded in bot messages (like leave balance display) */
+.msg-bubble .form-like-content {
+    background-color: #F0F0F0; /* Slightly different background */
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+
+/* ---------- Quick Actions (Pills) ---------- */
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap; /* Allow pills to wrap to next line */
+    gap: 8px;
+    padding: 10px 15px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--text-light);
+    flex-shrink: 0; /* Prevent quick actions from shrinking */
+}
+
+.pill {
+    background-color: var(--light-purple);
+    color: var(--dark-purple);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.pill:hover {
+    background-color: #b39ddb; /* Slightly darker light-purple */
+}
+
+/* ---------- Input Bar ---------- */
+.input-bar {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--text-light);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    flex-shrink: 0; /* Prevent input bar from shrinking */
+}
+
+.input-bar input {
+    flex-grow: 1; /* Take up most of the space */
+    border: 1px solid #CCC;
+    border-radius: 25px;
+    padding: 10px 15px;
+    font-size: 1em;
+    outline: none;
+    margin-right: 10px;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.mic-btn, .send-btn {
+    background-color: var(--primary-purple);
+    color: var(--text-light);
+    border: none;
+    border-radius: 50%; /* Circular buttons */
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.2s ease;
+}
+
+.mic-btn {
+    background-color: #FF5722; /* A distinct color for mic - Orange */
+    margin-right: 8px;
+}
+.mic-btn.listening { /* Visual cue when listening */
+    background-color: #f44336; /* Red */
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+
+.mic-btn:hover, .send-btn:hover {
+    background-color: var(--dark-purple);
+}
+
+/* ---------- Modals ---------- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-body {
+    background-color: var(--text-light);
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 340px; /* Max width for mobile-friendly modal */
+    width: 90%;
+    position: relative;
+    box-shadow: 0 5px 15px var(--shadow-light);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #555;
+}
+
+.modal-body h3 {
+    color: var(--primary-purple);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.form-row input[type="date"],
+.form-row input[type="text"],
+.form-row textarea,
+.form-row select,
+.form-row input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #FDFDFD; /* Slightly off-white for inputs */
+}
+
+.form-row textarea {
+    resize: vertical;
+}
+
+.btn-primary {
+    background-color: var(--primary-purple);
+    color: var(--text-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-purple);
+}
+
+.btn-ghost {
+    background: none;
+    border: 1px solid var(--primary-purple);
+    color: var(--primary-purple);
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+    background-color: var(--light-purple);
+    color: var(--dark-purple);
+}
+
+/* Payslip List Specific Styles */
+#payslipList .small {
+    color: #666;
+}
+#payslipList strong {
+    color: var(--dark-purple);
+}
